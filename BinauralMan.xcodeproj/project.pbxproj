@@ -11,14 +11,39 @@
 		1EBBAF07198816700085CEAC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBBAF06198816700085CEAC /* Foundation.framework */; };
 		1EBBAF09198816700085CEAC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBBAF08198816700085CEAC /* CoreGraphics.framework */; };
 		1EBBAF0B198816700085CEAC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBBAF0A198816700085CEAC /* UIKit.framework */; };
+		4763BCACD144F737F7CED5C5 /* libPods-BinauralMan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B2D7061ADE4DBDDAC35C26 /* libPods-BinauralMan.a */; };
 		5337818B19A7AE2A00C91CA8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337818019A7AE2A00C91CA8 /* AppDelegate.m */; };
 		5337819219A7AE3A00C91CA8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5337819119A7AE3A00C91CA8 /* Images.xcassets */; };
 		5337819919A7AE5900C91CA8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5337819719A7AE5900C91CA8 /* Main.storyboard */; };
 		5337819B19A7AE6000C91CA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5337819A19A7AE6000C91CA8 /* main.m */; };
-		79502AAD1A817F1E0074CC69 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79502AAC1A817F1E0074CC69 /* ViewController.m */; };
+		790E2D351A82110B001E5F4F /* libbassenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D271A82110B001E5F4F /* libbassenc.a */; };
+		790E2D361A82110B001E5F4F /* libbassflac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D291A82110B001E5F4F /* libbassflac.a */; };
+		790E2D371A82110B001E5F4F /* libbassmidi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D2B1A82110B001E5F4F /* libbassmidi.a */; };
+		790E2D381A82110B001E5F4F /* libbassmix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D2D1A82110B001E5F4F /* libbassmix.a */; };
+		790E2D391A82110B001E5F4F /* libbassopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D2F1A82110B001E5F4F /* libbassopus.a */; };
+		790E2D3A1A82110B001E5F4F /* libbasswv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D311A82110B001E5F4F /* libbasswv.a */; };
+		790E2D3B1A82110B001E5F4F /* libbass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D321A82110B001E5F4F /* libbass.a */; };
+		790E2D3C1A82110B001E5F4F /* libbass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D341A82110B001E5F4F /* libbass.a */; };
+		790E2D3E1A8211E0001E5F4F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D3D1A8211E0001E5F4F /* SystemConfiguration.framework */; };
+		790E2D401A82125A001E5F4F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D3F1A82125A001E5F4F /* CFNetwork.framework */; };
+		790E2D421A821266001E5F4F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D411A821266001E5F4F /* Accelerate.framework */; };
+		790E2D441A82128B001E5F4F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D431A82128B001E5F4F /* CoreMIDI.framework */; };
+		790E2D4E1A85ABDB001E5F4F /* ChoriumRevA.SF2 in Resources */ = {isa = PBXBuildFile; fileRef = 790E2D4D1A85ABDB001E5F4F /* ChoriumRevA.SF2 */; };
+		790E2D501A85C4D0001E5F4F /* rocking8m11e.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 790E2D4F1A85C4D0001E5F4F /* rocking8m11e.sf2 */; };
+		79502AAD1A817F1E0074CC69 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502AAC1A817F1E0074CC69 /* ViewController.mm */; };
+		79502AC71A81A2C70074CC69 /* mo-audio.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502AB61A81A2C70074CC69 /* mo-audio.mm */; };
+		79502AC81A81A2C70074CC69 /* mo-buffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502AB81A81A2C70074CC69 /* mo-buffer.mm */; };
+		79502AC91A81A2C70074CC69 /* mo-fft.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502ABB1A81A2C70074CC69 /* mo-fft.mm */; };
+		79502ACA1A81A2C70074CC69 /* mo-fun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79502ABC1A81A2C70074CC69 /* mo-fun.cpp */; };
+		79502ACB1A81A2C70074CC69 /* mo-gfx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502ABF1A81A2C70074CC69 /* mo-gfx.mm */; };
+		79502ACC1A81A2C70074CC69 /* mo-glut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79502AC01A81A2C70074CC69 /* mo-glut.cpp */; };
+		79502ACD1A81A2C70074CC69 /* mo-thread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502AC31A81A2C70074CC69 /* mo-thread.mm */; };
+		79502ACE1A81A2C70074CC69 /* mo-touch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502AC51A81A2C70074CC69 /* mo-touch.mm */; };
+		79502AD01A81A3060074CC69 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79502ACF1A81A3060074CC69 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08A92C6B1B8E67E0994CE362 /* Pods-BinauralMan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BinauralMan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BinauralMan/Pods-BinauralMan.debug.xcconfig"; sourceTree = "<group>"; };
 		1E09C7311988458400CF3C1A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1EBBAF03198816700085CEAC /* BinauralMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BinauralMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EBBAF06198816700085CEAC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -32,8 +57,44 @@
 		5337819A19A7AE6000C91CA8 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LocateMe/main.m; sourceTree = SOURCE_ROOT; };
 		5337819C19A7AE6500C91CA8 /* BinauralMan-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "BinauralMan-Prefix.pch"; path = "LocateMe/BinauralMan-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		53D8249F19A7E670006EE82D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		74AB50C6FDA1C2D086C00F76 /* Pods-BinauralMan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BinauralMan.release.xcconfig"; path = "Pods/Target Support Files/Pods-BinauralMan/Pods-BinauralMan.release.xcconfig"; sourceTree = "<group>"; };
+		790E2D271A82110B001E5F4F /* libbassenc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbassenc.a; sourceTree = "<group>"; };
+		790E2D291A82110B001E5F4F /* libbassflac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbassflac.a; sourceTree = "<group>"; };
+		790E2D2B1A82110B001E5F4F /* libbassmidi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbassmidi.a; sourceTree = "<group>"; };
+		790E2D2D1A82110B001E5F4F /* libbassmix.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbassmix.a; sourceTree = "<group>"; };
+		790E2D2F1A82110B001E5F4F /* libbassopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbassopus.a; sourceTree = "<group>"; };
+		790E2D311A82110B001E5F4F /* libbasswv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbasswv.a; sourceTree = "<group>"; };
+		790E2D321A82110B001E5F4F /* libbass.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass.a; sourceTree = "<group>"; };
+		790E2D341A82110B001E5F4F /* libbass.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass.a; sourceTree = "<group>"; };
+		790E2D3D1A8211E0001E5F4F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		790E2D3F1A82125A001E5F4F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		790E2D411A821266001E5F4F /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		790E2D431A82128B001E5F4F /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		790E2D451A821482001E5F4F /* bass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bass.h; sourceTree = "<group>"; };
+		790E2D471A821FEB001E5F4F /* bassmidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bassmidi.h; sourceTree = "<group>"; };
+		790E2D4D1A85ABDB001E5F4F /* ChoriumRevA.SF2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ChoriumRevA.SF2; sourceTree = "<group>"; };
+		790E2D4F1A85C4D0001E5F4F /* rocking8m11e.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = rocking8m11e.sf2; sourceTree = "<group>"; };
 		79502AAB1A817F1E0074CC69 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = LocateMe/ViewController.h; sourceTree = SOURCE_ROOT; };
-		79502AAC1A817F1E0074CC69 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = LocateMe/ViewController.m; sourceTree = SOURCE_ROOT; };
+		79502AAC1A817F1E0074CC69 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewController.mm; path = LocateMe/ViewController.mm; sourceTree = SOURCE_ROOT; };
+		79502AB51A81A2C70074CC69 /* mo-audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-audio.h"; sourceTree = "<group>"; };
+		79502AB61A81A2C70074CC69 /* mo-audio.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "mo-audio.mm"; sourceTree = "<group>"; };
+		79502AB71A81A2C70074CC69 /* mo-buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-buffer.h"; sourceTree = "<group>"; };
+		79502AB81A81A2C70074CC69 /* mo-buffer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "mo-buffer.mm"; sourceTree = "<group>"; };
+		79502AB91A81A2C70074CC69 /* mo-def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-def.h"; sourceTree = "<group>"; };
+		79502ABA1A81A2C70074CC69 /* mo-fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-fft.h"; sourceTree = "<group>"; };
+		79502ABB1A81A2C70074CC69 /* mo-fft.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "mo-fft.mm"; sourceTree = "<group>"; };
+		79502ABC1A81A2C70074CC69 /* mo-fun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mo-fun.cpp"; sourceTree = "<group>"; };
+		79502ABD1A81A2C70074CC69 /* mo-fun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-fun.h"; sourceTree = "<group>"; };
+		79502ABE1A81A2C70074CC69 /* mo-gfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-gfx.h"; sourceTree = "<group>"; };
+		79502ABF1A81A2C70074CC69 /* mo-gfx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "mo-gfx.mm"; sourceTree = "<group>"; };
+		79502AC01A81A2C70074CC69 /* mo-glut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "mo-glut.cpp"; sourceTree = "<group>"; };
+		79502AC11A81A2C70074CC69 /* mo-glut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-glut.h"; sourceTree = "<group>"; };
+		79502AC21A81A2C70074CC69 /* mo-thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-thread.h"; sourceTree = "<group>"; };
+		79502AC31A81A2C70074CC69 /* mo-thread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "mo-thread.mm"; sourceTree = "<group>"; };
+		79502AC41A81A2C70074CC69 /* mo-touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-touch.h"; sourceTree = "<group>"; };
+		79502AC51A81A2C70074CC69 /* mo-touch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "mo-touch.mm"; sourceTree = "<group>"; };
+		79502ACF1A81A3060074CC69 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B2B2D7061ADE4DBDDAC35C26 /* libPods-BinauralMan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BinauralMan.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,10 +102,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				790E2D441A82128B001E5F4F /* CoreMIDI.framework in Frameworks */,
+				790E2D421A821266001E5F4F /* Accelerate.framework in Frameworks */,
+				790E2D401A82125A001E5F4F /* CFNetwork.framework in Frameworks */,
+				790E2D3E1A8211E0001E5F4F /* SystemConfiguration.framework in Frameworks */,
+				79502AD01A81A3060074CC69 /* AudioToolbox.framework in Frameworks */,
 				1E09C7321988458400CF3C1A /* CoreLocation.framework in Frameworks */,
+				790E2D3C1A82110B001E5F4F /* libbass.a in Frameworks */,
+				790E2D361A82110B001E5F4F /* libbassflac.a in Frameworks */,
+				790E2D3A1A82110B001E5F4F /* libbasswv.a in Frameworks */,
+				790E2D3B1A82110B001E5F4F /* libbass.a in Frameworks */,
+				790E2D381A82110B001E5F4F /* libbassmix.a in Frameworks */,
+				790E2D391A82110B001E5F4F /* libbassopus.a in Frameworks */,
+				790E2D371A82110B001E5F4F /* libbassmidi.a in Frameworks */,
 				1EBBAF09198816700085CEAC /* CoreGraphics.framework in Frameworks */,
 				1EBBAF0B198816700085CEAC /* UIKit.framework in Frameworks */,
 				1EBBAF07198816700085CEAC /* Foundation.framework in Frameworks */,
+				4763BCACD144F737F7CED5C5 /* libPods-BinauralMan.a in Frameworks */,
+				790E2D351A82110B001E5F4F /* libbassenc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,10 +129,13 @@
 		1EBBAEFA198816700085CEAC = {
 			isa = PBXGroup;
 			children = (
+				790E2D481A84AB5C001E5F4F /* assets */,
 				53D8249F19A7E670006EE82D /* README.md */,
+				79502AB31A81A2C70074CC69 /* api */,
 				1EBBAF0C198816700085CEAC /* LocationServices */,
 				1EBBAF05198816700085CEAC /* Frameworks */,
 				1EBBAF04198816700085CEAC /* Products */,
+				3E61445D49A6CAADAC6C2FCE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,10 +150,16 @@
 		1EBBAF05198816700085CEAC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				790E2D431A82128B001E5F4F /* CoreMIDI.framework */,
+				790E2D411A821266001E5F4F /* Accelerate.framework */,
+				790E2D3F1A82125A001E5F4F /* CFNetwork.framework */,
+				790E2D3D1A8211E0001E5F4F /* SystemConfiguration.framework */,
+				79502ACF1A81A3060074CC69 /* AudioToolbox.framework */,
 				1E09C7311988458400CF3C1A /* CoreLocation.framework */,
 				1EBBAF06198816700085CEAC /* Foundation.framework */,
 				1EBBAF08198816700085CEAC /* CoreGraphics.framework */,
 				1EBBAF0A198816700085CEAC /* UIKit.framework */,
+				B2B2D7061ADE4DBDDAC35C26 /* libPods-BinauralMan.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -86,7 +170,7 @@
 				5337817F19A7AE2A00C91CA8 /* AppDelegate.h */,
 				5337818019A7AE2A00C91CA8 /* AppDelegate.m */,
 				79502AAB1A817F1E0074CC69 /* ViewController.h */,
-				79502AAC1A817F1E0074CC69 /* ViewController.m */,
+				79502AAC1A817F1E0074CC69 /* ViewController.mm */,
 				1EEED35D19A67CA800F8FE7F /* Resources */,
 				1EBBAF0D198816700085CEAC /* Supporting Files */,
 			);
@@ -113,6 +197,138 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		3E61445D49A6CAADAC6C2FCE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				08A92C6B1B8E67E0994CE362 /* Pods-BinauralMan.debug.xcconfig */,
+				74AB50C6FDA1C2D086C00F76 /* Pods-BinauralMan.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		790E2D251A82110B001E5F4F /* bass24-ios */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D451A821482001E5F4F /* bass.h */,
+				790E2D471A821FEB001E5F4F /* bassmidi.h */,
+				790E2D261A82110B001E5F4F /* bassenc */,
+				790E2D281A82110B001E5F4F /* bassflac */,
+				790E2D2A1A82110B001E5F4F /* bassmidi */,
+				790E2D2C1A82110B001E5F4F /* bassmix */,
+				790E2D2E1A82110B001E5F4F /* bassopus */,
+				790E2D301A82110B001E5F4F /* basswv */,
+				790E2D321A82110B001E5F4F /* libbass.a */,
+				790E2D331A82110B001E5F4F /* mp3-free */,
+			);
+			path = "bass24-ios";
+			sourceTree = "<group>";
+		};
+		790E2D261A82110B001E5F4F /* bassenc */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D271A82110B001E5F4F /* libbassenc.a */,
+			);
+			path = bassenc;
+			sourceTree = "<group>";
+		};
+		790E2D281A82110B001E5F4F /* bassflac */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D291A82110B001E5F4F /* libbassflac.a */,
+			);
+			path = bassflac;
+			sourceTree = "<group>";
+		};
+		790E2D2A1A82110B001E5F4F /* bassmidi */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D2B1A82110B001E5F4F /* libbassmidi.a */,
+			);
+			path = bassmidi;
+			sourceTree = "<group>";
+		};
+		790E2D2C1A82110B001E5F4F /* bassmix */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D2D1A82110B001E5F4F /* libbassmix.a */,
+			);
+			path = bassmix;
+			sourceTree = "<group>";
+		};
+		790E2D2E1A82110B001E5F4F /* bassopus */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D2F1A82110B001E5F4F /* libbassopus.a */,
+			);
+			path = bassopus;
+			sourceTree = "<group>";
+		};
+		790E2D301A82110B001E5F4F /* basswv */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D311A82110B001E5F4F /* libbasswv.a */,
+			);
+			path = basswv;
+			sourceTree = "<group>";
+		};
+		790E2D331A82110B001E5F4F /* mp3-free */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D341A82110B001E5F4F /* libbass.a */,
+			);
+			path = "mp3-free";
+			sourceTree = "<group>";
+		};
+		790E2D481A84AB5C001E5F4F /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D4D1A85ABDB001E5F4F /* ChoriumRevA.SF2 */,
+				790E2D4F1A85C4D0001E5F4F /* rocking8m11e.sf2 */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		79502AB31A81A2C70074CC69 /* api */ = {
+			isa = PBXGroup;
+			children = (
+				790E2D251A82110B001E5F4F /* bass24-ios */,
+				79502AB41A81A2C70074CC69 /* momu */,
+				79502AC61A81A2C70074CC69 /* y-api */,
+			);
+			path = api;
+			sourceTree = "<group>";
+		};
+		79502AB41A81A2C70074CC69 /* momu */ = {
+			isa = PBXGroup;
+			children = (
+				79502AB51A81A2C70074CC69 /* mo-audio.h */,
+				79502AB61A81A2C70074CC69 /* mo-audio.mm */,
+				79502AB71A81A2C70074CC69 /* mo-buffer.h */,
+				79502AB81A81A2C70074CC69 /* mo-buffer.mm */,
+				79502AB91A81A2C70074CC69 /* mo-def.h */,
+				79502ABA1A81A2C70074CC69 /* mo-fft.h */,
+				79502ABB1A81A2C70074CC69 /* mo-fft.mm */,
+				79502ABC1A81A2C70074CC69 /* mo-fun.cpp */,
+				79502ABD1A81A2C70074CC69 /* mo-fun.h */,
+				79502ABE1A81A2C70074CC69 /* mo-gfx.h */,
+				79502ABF1A81A2C70074CC69 /* mo-gfx.mm */,
+				79502AC01A81A2C70074CC69 /* mo-glut.cpp */,
+				79502AC11A81A2C70074CC69 /* mo-glut.h */,
+				79502AC21A81A2C70074CC69 /* mo-thread.h */,
+				79502AC31A81A2C70074CC69 /* mo-thread.mm */,
+				79502AC41A81A2C70074CC69 /* mo-touch.h */,
+				79502AC51A81A2C70074CC69 /* mo-touch.mm */,
+			);
+			path = momu;
+			sourceTree = "<group>";
+		};
+		79502AC61A81A2C70074CC69 /* y-api */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "y-api";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -120,9 +336,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1EBBAF38198816700085CEAC /* Build configuration list for PBXNativeTarget "BinauralMan" */;
 			buildPhases = (
+				69F20EC5A01BEBDD688E7773 /* Check Pods Manifest.lock */,
 				1EBBAEFF198816700085CEAC /* Sources */,
 				1EBBAF00198816700085CEAC /* Frameworks */,
 				1EBBAF01198816700085CEAC /* Resources */,
+				0934A05574231966860EAA8C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -166,11 +384,46 @@
 			buildActionMask = 2147483647;
 			files = (
 				5337819919A7AE5900C91CA8 /* Main.storyboard in Resources */,
+				790E2D4E1A85ABDB001E5F4F /* ChoriumRevA.SF2 in Resources */,
+				790E2D501A85C4D0001E5F4F /* rocking8m11e.sf2 in Resources */,
 				5337819219A7AE3A00C91CA8 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0934A05574231966860EAA8C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BinauralMan/Pods-BinauralMan-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69F20EC5A01BEBDD688E7773 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1EBBAEFF198816700085CEAC /* Sources */ = {
@@ -178,8 +431,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5337818B19A7AE2A00C91CA8 /* AppDelegate.m in Sources */,
-				79502AAD1A817F1E0074CC69 /* ViewController.m in Sources */,
+				79502AAD1A817F1E0074CC69 /* ViewController.mm in Sources */,
+				79502ACE1A81A2C70074CC69 /* mo-touch.mm in Sources */,
+				79502AC91A81A2C70074CC69 /* mo-fft.mm in Sources */,
+				79502AC71A81A2C70074CC69 /* mo-audio.mm in Sources */,
+				79502ACA1A81A2C70074CC69 /* mo-fun.cpp in Sources */,
+				79502AC81A81A2C70074CC69 /* mo-buffer.mm in Sources */,
+				79502ACC1A81A2C70074CC69 /* mo-glut.cpp in Sources */,
 				5337819B19A7AE6000C91CA8 /* main.m in Sources */,
+				79502ACB1A81A2C70074CC69 /* mo-gfx.mm in Sources */,
+				79502ACD1A81A2C70074CC69 /* mo-thread.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +530,7 @@
 		};
 		1EBBAF39198816700085CEAC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08A92C6B1B8E67E0994CE362 /* Pods-BinauralMan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -279,6 +541,17 @@
 				GCC_PREFIX_HEADER = "LocateMe/BinauralMan-Prefix.pch";
 				INFOPLIST_FILE = "LocateMe/BinauralMan-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/api/bass24-ios/bassenc",
+					"$(PROJECT_DIR)/api/bass24-ios/bassflac",
+					"$(PROJECT_DIR)/api/bass24-ios/bassmidi",
+					"$(PROJECT_DIR)/api/bass24-ios/bassmix",
+					"$(PROJECT_DIR)/api/bass24-ios/bassopus",
+					"$(PROJECT_DIR)/api/bass24-ios/basswv",
+					"$(PROJECT_DIR)/api/bass24-ios",
+					"$(PROJECT_DIR)/api/bass24-ios/mp3-free",
+				);
 				PRODUCT_NAME = BinauralMan;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -287,6 +560,7 @@
 		};
 		1EBBAF3A198816700085CEAC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74AB50C6FDA1C2D086C00F76 /* Pods-BinauralMan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -297,6 +571,17 @@
 				GCC_PREFIX_HEADER = "LocateMe/BinauralMan-Prefix.pch";
 				INFOPLIST_FILE = "LocateMe/BinauralMan-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/api/bass24-ios/bassenc",
+					"$(PROJECT_DIR)/api/bass24-ios/bassflac",
+					"$(PROJECT_DIR)/api/bass24-ios/bassmidi",
+					"$(PROJECT_DIR)/api/bass24-ios/bassmix",
+					"$(PROJECT_DIR)/api/bass24-ios/bassopus",
+					"$(PROJECT_DIR)/api/bass24-ios/basswv",
+					"$(PROJECT_DIR)/api/bass24-ios",
+					"$(PROJECT_DIR)/api/bass24-ios/mp3-free",
+				);
 				PRODUCT_NAME = BinauralMan;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
