@@ -16,26 +16,23 @@
 #import "mo-audio.h"
 #import "mo-fun.h"
 
-#import "bassmidi.h"
+#import "gex-basssynth.h"
 
 // defines
 #define SRATE 44100
 #define N_CHANNELS 16
-
-// audio generator
-//stk::Clarinet *clueSounder;
 
 // clues
 std::vector <CLLocation *> clues;
 int currClue = 0;
 BOOL collectedAllClues = false;
 bool clueSounderOn = false;
+float minDistToCollectClue = 15.0;
 
 // location metrics
 float minDistToHearClue = 60.0;
 float distanceToClue = -1.0;
-
-float minDistToCollectClue = 10.0;
+float trueHeading = 180.0;
 
 // boost hearing drugs
 bool boostHearing = false;
@@ -44,13 +41,12 @@ int boostHearingDuration = 16;      // in beats
 int boostRemaining = boostHearingDuration;
 
 // BASS
-HSTREAM stream;
-BASS_MIDI_FONT fonts[1];
+GeXBASSSynth *g_synth;
 
 // audio constants
 int ambientChan = 0;
 int taikoChan = 1;
-int taikoFreq = 32;
+int taikoFreq = 16;
 int clueSounderChan = 3;
 
 // tempo/beats
@@ -73,58 +69,12 @@ bool beatUsed = false;
 
 @implementation ViewController
 
-DWORD CALLBACK BASSCallback(HSTREAM handle, void *buffer, DWORD length, void *user) {
-//    NSLog(@"CB %d", length);
-//    g_t += frameSize;
-    
-    float tempoPeriod = SRATE / (g_bpm / 60.0);
-    // beat event
-    if (g_acculumator > tempoPeriod) {
-        g_acculumator -= tempoPeriod;
-        beatCounter++;
-        beatUsed = false;
-        
-        if (boostHearing)
-            boostRemaining--;
-    }
-    g_acculumator += 512;
-    
-//    for (UInt32 i = 0; i < frameSize; i++) {
-        // synthesize
-        // buffer[i*2] = clueSounder->tick() * clueSounderAmplifier;
-        // silence
-//        buffer[i*2+1] = buffer[i*2] = 0;
-//    }
-    
-    float clueSounderAmplifier;
-    float _minDistToHearClue = minDistToHearClue * (boostHearing ? boostHearingFactor : 1);
-    if ((_minDistToHearClue == -1) || (distanceToClue == -1) || (_minDistToHearClue - distanceToClue) <= 0 || collectedAllClues)
-        clueSounderAmplifier = 0;
-    else
-        clueSounderAmplifier = pow(2.0 * ((_minDistToHearClue - distanceToClue) / _minDistToHearClue), 2);
-    
-//     beat independant audio
-//     modulate clueSounder volume with distance
-    BASS_MIDI_StreamEvent(stream, clueSounderChan, MIDI_EVENT_VOLUME, 127 * clueSounderAmplifier);
-    
-//     beat dependant audio
-    if (beatUsed == false) {
-        if (beatCounter % taikoFreq == 0) {
-            changeProgam(taikoChan, 116);
-            BASS_MIDI_StreamEvent(stream, taikoChan, MIDI_EVENT_REVERB, 127);
-            playNote(taikoChan, 12, 127);
-            playNote(taikoChan, 19, 127);
-            playNote(taikoChan, 24, 127);
-            playNote(taikoChan, 31, 127);
-            playNote(taikoChan, 36, 127);
-            playNote(taikoChan, 48, 127);
-        }
-    }
-    beatUsed = true;
-    
-    return length;
-}
 
+// ====================================================
+// Audio Callback:
+// Records beat events, updates audio data,
+// and synthesizes BASSsynth to buffer
+// ====================================================
 void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
     g_t += frameSize;
     
@@ -141,14 +91,12 @@ void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
     g_acculumator += frameSize;
     
     for (UInt32 i = 0; i < frameSize; i++) {
-        // synthesize
-        // buffer[i*2] = clueSounder->tick() * clueSounderAmplifier;
         // silence
         buffer[i*2+1] = buffer[i*2] = 0;
     }
     
     float clueSounderAmplifier;
-    float _minDistToHearClue = minDistToHearClue;
+    float _minDistToHearClue = minDistToHearClue * (boostHearing ? boostHearingFactor : 1);
     if ((_minDistToHearClue == -1) || (distanceToClue == -1) || (_minDistToHearClue - distanceToClue) <= 0 || collectedAllClues)
         clueSounderAmplifier = 0;
     else
@@ -156,33 +104,27 @@ void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
     
     // beat independant audio
     // modulate clueSounder volume with distance
-//    BASS_MIDI_StreamEvent(stream, clueSounderChan, MIDI_EVENT_VOLUME, 127 * clueSounderAmplifier);
+    g_synth->programChange(clueSounderChan, 16);
+    g_synth->noteOn(clueSounderChan, 24, 126 * clueSounderAmplifier);
     
     // beat dependant audio
-//    if (beatUsed == false) {
-//        if (beatCounter % taikoFreq == 0) {
-//            changeProgam(taikoChan, 116);
-//            BASS_MIDI_StreamEvent(stream, taikoChan, MIDI_EVENT_REVERB, 127);
-//            playNote(taikoChan, 12, 127);
-//            playNote(taikoChan, 19, 127);
-//            playNote(taikoChan, 24, 127);
-//            playNote(taikoChan, 31, 127);
-//            playNote(taikoChan, 36, 127);
-//            playNote(taikoChan, 48, 127);
-//        }
-//    }
+    if (beatUsed == false) {
+        if (beatCounter % taikoFreq == 0) {
+            g_synth->programChange(taikoChan, 116);
+            g_synth->controlChange(taikoChan, MIDI_EVENT_REVERB, 127);
+            g_synth->noteOn(taikoChan, 12, 127);
+            g_synth->noteOn(taikoChan, 19, 127);
+            g_synth->noteOn(taikoChan, 24, 127);
+            g_synth->noteOn(taikoChan, 31, 127);
+            g_synth->noteOn(taikoChan, 36, 127);
+            g_synth->noteOn(taikoChan, 48, 127);
+        }
+    }
+    
     beatUsed = true;
-
-//    if (boostRemaining <= 0) {
-//        boostHearing = false;
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ear enhancing drugs wore off"
-//                                                        message:@"Your hearing is now normal. Wait for a while before taking drugs again"
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"OK"
-//                                              otherButtonTitles:nil];
-//        [alert show];
-//
-//    }
+    
+    // synthesize
+    g_synth->synthesize2(buffer, frameSize);
 }
 
 - (void)viewDidLoad {
@@ -200,137 +142,69 @@ void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
     NSLog(@"leggo");
     [self.locationManager startUpdatingLocation];
     
-    // Start heading updates.
-//    if ([CLLocationManager headingAvailable]) {
-//        self.locationManager.headingFilter = 5;
-//        NSLog(@"leggo heading");
-//        [self.locationManager startUpdatingHeading];
-//    }
+//     Start heading updates.
+    if ([CLLocationManager headingAvailable]) {
+        self.locationManager.headingFilter = 5;
+        NSLog(@"leggo heading");
+        [self.locationManager startUpdatingHeading];
+    }
     
     // clues init
     
-    // CCRMA
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.4206994, -122.1720117) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.4212873, -122.1719312) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.4214279, -122.1714216) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.4215174, -122.1707618) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    // CCRMA Courtyard / Backroad / Backroad Right / CCRMA Right / CCRMA Entrance / CCRMA Left Front
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420964, -122.172379) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420816, -122.172671) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420745, -122.172160) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420973, -122.172093) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.421159, -122.172340) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.421520, -122.172905) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
     
-    // BrannerPL/Escondido/BrannerCY/Wilbur/EscondidoTA/Crothers
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425535, -122.162451) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.424663, -122.162405) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425166, -122.162958) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.424852, -122.164095) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425227, -122.164841) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.426062, -122.164117) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    // BrannerPL/Escondido/BrannerCY/Wilbur/EscondidoTA/Crothers
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425535, -122.162451) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.424663, -122.162405) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425166, -122.162958) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.424852, -122.164095) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425227, -122.164841) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.426062, -122.164117) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
     
-    // init instrument
-//    clueSounder = new stk::Clarinet();
-//    clueSounder->setFrequency(440);
-//    clueSounder->noteOn(440, 1);
+    // init bass synth
+    g_synth = new GeXBASSSynth();
+    NSLog( @"starting BASS synth..." );
     
-//    // log
-//    NSLog( @"starting real-time audio..." );
-//    
-//    // init the audio layer
-//    bool result = MoAudio::init(SRATE, 32, 2);
-//    if( !result )
-//    {
-//        // something went wrong
-//        NSLog( @"cannot initialize real-time audio!" );
-//        // bail out
-//        return;
-//    }
-//    
-//    // start the audio layer, registering a callback method
-//    result = MoAudio::start( audioCallback, NULL );
-//    if( !result )
-//    {
-//        // something went wrong
-//        NSLog( @"cannot start real-time audio!" );
-//        // bail out
-//        return;
-//    }
-    
-    // init BASS
-    initBASS();
-    
-    fireClueSounder(10);
-}
-
-void fireClueSounder(DWORD gain) {
-    changeProgam(clueSounderChan, 16);
-//    BASS_MIDI_StreamEvent(stream, clueSounderChan, MIDI_EVENT_REVERB, 127);
-    playNote(clueSounderChan, 24, gain);
-    playNote(clueSounderChan, 36, gain);
-    playNote(clueSounderChan, 43, gain);
-    playNote(clueSounderChan, 48, gain);
-    playNote(clueSounderChan, 60, gain);
-//    playNote(clueSounderChan, 67, 127);
-//    playNote(clueSounderChan, 72, 127);
-}
-
-void initBASS() {
-    int err;
-    
-    // check the correct BASS was loaded
-    if (HIWORD(BASS_GetVersion()) != BASSVERSION)
-        NSLog(@"An incorrect version of BASS was loaded");
-    
-    // initialize default output device
-    if (!BASS_Init(-1, SRATE, 0, 0, NULL))
-        NSLog(@"Can't initialize output device");
-
-    HSTREAM _stream = BASS_StreamCreate(SRATE, N_CHANNELS, 0, BASSCallback, NULL);
-//    BASS_SetConfig(BASS_CONFIG_BUFFER, 512); // set the buffer length
-    BASS_ChannelSetAttribute(_stream, BASS_ATTRIB_NOBUFFER, 1);
-    BASS_ChannelPlay(_stream, 0);
-    
-    // might not need 16 input channels but it also might not hurt anything
-    stream = BASS_MIDI_StreamCreate(N_CHANNELS, 0, 1); // create the MIDI stream (16 MIDI channels for device input + 1 for keyboard input)
-    
-    BASS_ChannelSetAttribute(stream, BASS_ATTRIB_NOBUFFER, 1); // no buffering for minimum latency
-
-    for(int i = 0; i < N_CHANNELS; i++){
-        BASS_ChannelPlay(stream, 0); // start it
-        err = BASS_ErrorGetCode();
-        if (err != 0) {
-            NSLog(@"Bass error code %d after initializing channel %d", err, i);
-            return;
-        }
+    if (!g_synth->init(SRATE, N_CHANNELS)) {
+        NSLog( @"cannot init BASS synth..." );
+        return;
     }
-    
-//    HSOUNDFONT sfont1 = BASS_MIDI_FontInit([[[NSBundle mainBundle] pathForResource: @"ChoriumRevA" ofType: @"SF2"] UTF8String], 0);
-    HSOUNDFONT sfont1 = BASS_MIDI_FontInit([[[NSBundle mainBundle] pathForResource: @"rocking8m11e" ofType: @"sf2"] UTF8String], 0);
-    
-    err = BASS_ErrorGetCode();
-    if (err != 0) {
-        NSLog(@"Bass error code %d after loading soundfont", err);
+        
+    if (!g_synth->load([[[NSBundle mainBundle] pathForResource: @"rocking8m11e" ofType: @"sf2"] UTF8String])) {
+        NSLog( @"cannot load soundfont in BASS..." );
         return;
     }
     
-    fonts[0].font = sfont1;
-    fonts[0].preset = -1;
-    fonts[0].bank = 0;
+    // log
+    NSLog( @"starting real-time audio..." );
     
-    BASS_MIDI_StreamSetFonts(stream, fonts, 1);
+    // init the audio layer
+    bool result = MoAudio::init(SRATE, 32, 2);
+    if( !result )
+    {
+        // something went wrong
+        NSLog( @"cannot initialize real-time audio!" );
+        // bail out
+        return;
+    }
     
-    NSLog(@"BASS Initialized");
+    // start the audio layer, registering a callback method
+    result = MoAudio::start( audioCallback, NULL );
+    if( !result )
+    {
+        // something went wrong
+        NSLog( @"cannot start real-time audio!" );
+        // bail out
+        return;
+    }
 }
 
-void playNote(DWORD chan, DWORD note, DWORD velocity, float pan = 0, DWORD attack = 0, DWORD release = 0) {
-    BASS_MIDI_StreamEvent(stream, chan, MIDI_EVENT_RELEASE, release);
-    BASS_MIDI_StreamEvent(stream, chan, MIDI_EVENT_ATTACK, attack);
-    BASS_MIDI_StreamEvent(stream, chan, MIDI_EVENT_PAN, ((pan + 1) / 2) * 127);
-    BASS_MIDI_StreamEvent(stream, chan, MIDI_EVENT_NOTE, MAKEWORD(note, velocity));
-}
-
-void changeProgam(DWORD chan, DWORD program) {
-    BASS_MIDI_StreamEvent(stream, chan, MIDI_EVENT_PROGRAM, program);
-}
-
-void stopNote(DWORD chan, DWORD note){
-    playNote(note, 0, 64, chan, 0);
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -347,7 +221,6 @@ void stopNote(DWORD chan, DWORD note){
 }
 */
 
-
 #pragma mark - Location Manager Interactions
 
 
@@ -358,6 +231,7 @@ void stopNote(DWORD chan, DWORD note){
     CLLocation *clueLocation = clues[currClue];
     CLLocationDistance distance = [location distanceFromLocation:clueLocation];
 //    NSLog(@"Distance %f", distance);
+    
     
     if (minDistToHearClue == -1)
         minDistToHearClue = distance;
@@ -374,13 +248,13 @@ void stopNote(DWORD chan, DWORD note){
     if (newHeading.headingAccuracy < 0)
         return;
     
-    // Use the true heading if it is valid.
-//    CLLocationDirection  theHeading = ((newHeading.trueHeading > 0) ?
-//                                       newHeading.trueHeading : newHeading.magneticHeading);
+    
+//     Use the true heading if it is valid.
+    trueHeading = ((newHeading.trueHeading > 0) ?
+                                       newHeading.trueHeading : newHeading.magneticHeading);
     
     NSLog(@"Heading %@", newHeading.description);
-//    self.currentHeading = theHeading;
-//    [self updateHeadingDisplays];
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {

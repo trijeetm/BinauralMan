@@ -30,6 +30,7 @@
 		790E2D441A82128B001E5F4F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790E2D431A82128B001E5F4F /* CoreMIDI.framework */; };
 		790E2D4E1A85ABDB001E5F4F /* ChoriumRevA.SF2 in Resources */ = {isa = PBXBuildFile; fileRef = 790E2D4D1A85ABDB001E5F4F /* ChoriumRevA.SF2 */; };
 		790E2D501A85C4D0001E5F4F /* rocking8m11e.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 790E2D4F1A85C4D0001E5F4F /* rocking8m11e.sf2 */; };
+		790E2D531A8B363D001E5F4F /* gex-basssynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 790E2D511A8B363D001E5F4F /* gex-basssynth.cpp */; };
 		79502AAD1A817F1E0074CC69 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502AAC1A817F1E0074CC69 /* ViewController.mm */; };
 		79502AC71A81A2C70074CC69 /* mo-audio.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502AB61A81A2C70074CC69 /* mo-audio.mm */; };
 		79502AC81A81A2C70074CC69 /* mo-buffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79502AB81A81A2C70074CC69 /* mo-buffer.mm */; };
@@ -74,6 +75,8 @@
 		790E2D471A821FEB001E5F4F /* bassmidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bassmidi.h; sourceTree = "<group>"; };
 		790E2D4D1A85ABDB001E5F4F /* ChoriumRevA.SF2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ChoriumRevA.SF2; sourceTree = "<group>"; };
 		790E2D4F1A85C4D0001E5F4F /* rocking8m11e.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = rocking8m11e.sf2; sourceTree = "<group>"; };
+		790E2D511A8B363D001E5F4F /* gex-basssynth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gex-basssynth.cpp"; sourceTree = "<group>"; };
+		790E2D521A8B363D001E5F4F /* gex-basssynth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gex-basssynth.h"; sourceTree = "<group>"; };
 		79502AAB1A817F1E0074CC69 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = LocateMe/ViewController.h; sourceTree = SOURCE_ROOT; };
 		79502AAC1A817F1E0074CC69 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewController.mm; path = LocateMe/ViewController.mm; sourceTree = SOURCE_ROOT; };
 		79502AB51A81A2C70074CC69 /* mo-audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mo-audio.h"; sourceTree = "<group>"; };
@@ -291,6 +294,8 @@
 		79502AB31A81A2C70074CC69 /* api */ = {
 			isa = PBXGroup;
 			children = (
+				790E2D511A8B363D001E5F4F /* gex-basssynth.cpp */,
+				790E2D521A8B363D001E5F4F /* gex-basssynth.h */,
 				790E2D251A82110B001E5F4F /* bass24-ios */,
 				79502AB41A81A2C70074CC69 /* momu */,
 				79502AC61A81A2C70074CC69 /* y-api */,
@@ -440,6 +445,7 @@
 				79502ACC1A81A2C70074CC69 /* mo-glut.cpp in Sources */,
 				5337819B19A7AE6000C91CA8 /* main.m in Sources */,
 				79502ACB1A81A2C70074CC69 /* mo-gfx.mm in Sources */,
+				790E2D531A8B363D001E5F4F /* gex-basssynth.cpp in Sources */,
 				79502ACD1A81A2C70074CC69 /* mo-thread.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
