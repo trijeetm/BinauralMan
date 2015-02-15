@@ -15,24 +15,27 @@
 
 #import "mo-audio.h"
 #import "mo-fun.h"
+#import "mo-gfx.h"
 
 #import "gex-basssynth.h"
 
 // defines
 #define SRATE 44100
 #define N_CHANNELS 16
+#define PI 3.14159265
 
 // clues
 std::vector <CLLocation *> clues;
 int currClue = 0;
 BOOL collectedAllClues = false;
 bool clueSounderOn = false;
-float minDistToCollectClue = 15.0;
+float minDistToCollectClue = 500.0;
 
 // location metrics
+CLLocation *g_playerLocation;
 float minDistToHearClue = 60.0;
 float distanceToClue = -1.0;
-float trueHeading = 180.0;
+float playerHeading = -1;
 
 // boost hearing drugs
 bool boostHearing = false;
@@ -78,6 +81,8 @@ bool beatUsed = false;
 void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
     g_t += frameSize;
     
+    NSLog(@"angle: %f", getPanAngle(g_playerLocation, clues[currClue]));
+    
     float tempoPeriod = SRATE / (g_bpm / 60.0);
     // beat event
     if (g_acculumator > tempoPeriod) {
@@ -100,15 +105,21 @@ void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
     if ((_minDistToHearClue == -1) || (distanceToClue == -1) || (_minDistToHearClue - distanceToClue) <= 0 || collectedAllClues)
         clueSounderAmplifier = 0;
     else
-        clueSounderAmplifier = pow(2.0 * ((_minDistToHearClue - distanceToClue) / _minDistToHearClue), 2);
+        clueSounderAmplifier = (_minDistToHearClue - distanceToClue) / _minDistToHearClue;
+//        clueSounderAmplifier = pow(2.0 * ((_minDistToHearClue - distanceToClue) / _minDistToHearClue), 2);
     
     // beat independant audio
     // modulate clueSounder volume with distance
-    g_synth->programChange(clueSounderChan, 16);
-    g_synth->noteOn(clueSounderChan, 24, 126 * clueSounderAmplifier);
+//    NSLog(@"clueSounderAmplifier: %f", clueSounderAmplifier);
+//    g_synth->controlChange(clueSounderChan, MIDI_EVENT_VOLUME, clueSounderAmplifier * 127);
+    g_synth->controlChange(clueSounderChan, MIDI_EVENT_VOLUME, (int)(clueSounderAmplifier * 110));
+    g_synth->controlChange(clueSounderChan, MIDI_EVENT_PITCH, (int)(8192 + clueSounderAmplifier * 8000));
     
     // beat dependant audio
     if (beatUsed == false) {
+//        if (beatCounter % 1 == 0) {
+        
+//        }
         if (beatCounter % taikoFreq == 0) {
             g_synth->programChange(taikoChan, 116);
             g_synth->controlChange(taikoChan, MIDI_EVENT_REVERB, 127);
@@ -151,21 +162,21 @@ void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
     
     // clues init
     
-    // CCRMA Courtyard / Backroad / Backroad Right / CCRMA Right / CCRMA Entrance / CCRMA Left Front
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420964, -122.172379) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420816, -122.172671) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420745, -122.172160) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420973, -122.172093) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.421159, -122.172340) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.421520, -122.172905) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    // CCRMA Courtyard / Backroad / Backroad Right / CCRMA Right / CCRMA Entrance / CCRMA Left Front
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420964, -122.172379) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420816, -122.172671) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420745, -122.172160) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.420973, -122.172093) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.421159, -122.172340) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.421520, -122.172905) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
     
-//    // BrannerPL/Escondido/BrannerCY/Wilbur/EscondidoTA/Crothers
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425535, -122.162451) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.424663, -122.162405) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425166, -122.162958) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.424852, -122.164095) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425227, -122.164841) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
-//    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.426062, -122.164117) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    // BrannerPL/Escondido/BrannerCY/Wilbur/EscondidoTA/Crothers
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425535, -122.162451) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.424663, -122.162405) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425166, -122.162958) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.424852, -122.164095) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.425227, -122.164841) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
+    clues.push_back([[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(37.426062, -122.164117) altitude: 0 horizontalAccuracy: 0 verticalAccuracy: 0 course: 0 speed: 0 timestamp: nil]);
     
     // init bass synth
     g_synth = new GeXBASSSynth();
@@ -203,8 +214,37 @@ void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
         // bail out
         return;
     }
+    
+    initClueSounder();
 }
 
+void initClueSounder() {
+    g_synth->programChange(clueSounderChan, 16);
+    g_synth->noteOn(clueSounderChan, 24, 127);
+    g_synth->noteOn(clueSounderChan, 30, 127);
+    g_synth->noteOn(clueSounderChan, 36, 127);
+    
+    g_synth->noteOn(clueSounderChan, 30 + 36, 45);
+    g_synth->noteOn(clueSounderChan, 24 + 36, 45);
+    g_synth->controlChange(clueSounderChan, MIDI_EVENT_PITCHRANGE, 6);
+}
+
+float getPanAngle(CLLocation *playerLocation, CLLocation *objectLocation) {
+    Vector3D magneticNorth = Vector3D(75.7667, 99.7833, 0);
+    Vector3D _player = Vector3D(playerLocation.coordinate.longitude, playerLocation.coordinate.latitude, 0);
+    Vector3D _object = Vector3D(objectLocation.coordinate.longitude, objectLocation.coordinate.latitude, 0);
+    
+    // line vector from player to magnetic NP
+    Vector3D playerToNP = magneticNorth - _player;
+    Vector3D playerToObject = _object - _player;
+    float angleObjectNP = acos(playerToNP * playerToObject / (playerToNP.magnitude() * playerToObject.magnitude()));
+    angleObjectNP *= (180.0 / PI);
+    
+    if (playerHeading == -1)
+        return -1;
+    
+    return (angleObjectNP - playerHeading);
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -225,13 +265,15 @@ void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    CLLocation *location = newLocation;
+    g_playerLocation = newLocation;
 //    NSLog(@"Current Location: %f, %f +/- %fm", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy);
+    
+    // alias variable to not break existing function
+    CLLocation *location = g_playerLocation;
     
     CLLocation *clueLocation = clues[currClue];
     CLLocationDistance distance = [location distanceFromLocation:clueLocation];
 //    NSLog(@"Distance %f", distance);
-    
     
     if (minDistToHearClue == -1)
         minDistToHearClue = distance;
@@ -250,10 +292,10 @@ void audioCallback( Float32 * buffer, UInt32 frameSize, void * userData ) {
     
     
 //     Use the true heading if it is valid.
-    trueHeading = ((newHeading.trueHeading > 0) ?
+    playerHeading = ((newHeading.trueHeading > 0) ?
                                        newHeading.trueHeading : newHeading.magneticHeading);
     
-    NSLog(@"Heading %@", newHeading.description);
+//    NSLog(@"Heading %@", newHeading.description);
     
 }
 
