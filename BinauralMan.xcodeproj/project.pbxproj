@@ -298,7 +298,6 @@
 				790E2D521A8B363D001E5F4F /* gex-basssynth.h */,
 				790E2D251A82110B001E5F4F /* bass24-ios */,
 				79502AB41A81A2C70074CC69 /* momu */,
-				79502AC61A81A2C70074CC69 /* y-api */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -325,13 +324,6 @@
 				79502AC51A81A2C70074CC69 /* mo-touch.mm */,
 			);
 			path = momu;
-			sourceTree = "<group>";
-		};
-		79502AC61A81A2C70074CC69 /* y-api */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "y-api";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
